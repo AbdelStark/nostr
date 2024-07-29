@@ -1191,6 +1191,7 @@ impl EventBuilder {
     /// <https://github.com/nostr-protocol/nips/blob/master/90.md>
     pub fn job_result(
         job_request: Event,
+        content_payload: Option<String>,
         amount_millisats: u64,
         bolt11: Option<String>,
     ) -> Result<Self, Error> {
@@ -1221,7 +1222,7 @@ impl EventBuilder {
                     bolt11,
                 }),
             ]);
-            Ok(Self::new(kind, "", tags))
+            Ok(Self::new(kind, content_payload.unwrap_or_default(), tags))
         } else {
             Err(Error::WrongKind {
                 received: kind,
